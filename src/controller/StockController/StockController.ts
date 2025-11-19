@@ -10,3 +10,12 @@ export async function createStock(req: Request, res: Response, next: NextFunctio
         next(error);
     }
 }
+
+export async function getStock(_req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const menuItems = await StockService.getStockItems();
+        res.status(200).json(menuItems);
+    } catch (error) {
+        next(error);
+    }
+}

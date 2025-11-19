@@ -28,3 +28,13 @@ export async function deleteStock(req: Request, res: Response, next: NextFunctio
         next(error);
     }
 }
+export const getStockItemById = async (req: Request, res: Response,next:NextFunction) => {
+  try {
+    const { id } = req.params;
+    const item= await StockService.getStockById(id);
+    return res.status(200).send(item);
+  } catch (error) {
+    console.error("Error fetching stock item:", error);
+   next(error)
+  }
+};

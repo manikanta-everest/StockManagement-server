@@ -19,3 +19,12 @@ export const getStockItems = async () => {
         ...doc.data(),
     }));
 };
+export const deleteStockItem = async (itemId: string): Promise<undefined> => {
+    const stockRef = getStockRef(itemId);
+    await stockRef.delete();
+    return;
+};
+const getStockRef = (id: string) => {
+    const stockRef = db.collection(STOCK_COLLECTION).doc(id);
+    return stockRef;
+}

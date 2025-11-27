@@ -28,3 +28,8 @@ const getStockRef = (id: string) => {
     const stockRef = db.collection(STOCK_COLLECTION).doc(id);
     return stockRef;
 }
+export const getStockById = async (id: string) => {
+    const stockRef = getStockRef(id);
+    const snap = await stockRef.get();
+    return snap.data();
+}

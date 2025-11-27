@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/", createStock);
 router.get("/", getStock)
-router.delete("/:id",deleteStock)
-router.get("/:id",getStockItemById)
-router.patch("/:id",updateStockItem)
+router.delete("/:id", deleteStock)
+router.get("/:id", getStockItemById)
+router.put("/:id", updateStockItem)
 export default router;

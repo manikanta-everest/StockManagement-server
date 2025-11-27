@@ -13,8 +13,17 @@ export async function createStock(req: Request, res: Response, next: NextFunctio
 
 export async function getStock(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const menuItems = await StockService.getStockItems();
-        res.status(200).json(menuItems);
+        const stockItems = await StockService.getStockItems();
+        res.status(200).json(stockItems);
+    } catch (error) {
+        next(error);
+    }
+}
+export async function deleteStock(req: Request, res: Response, next: NextFunction) {
+    const itemId = req.params.id;
+    try {
+        await StockService.deleteStockItem(itemId)
+        res.status(200).send()
     } catch (error) {
         next(error);
     }

@@ -10,3 +10,12 @@ export const createStockItem = async (data: ProductBody): Promise<Product> => {
     await stockRef.set(newstock);
     return { id: stockRef.id, ...newstock };
 };
+
+export const getStockItems = async () => {
+    const snapshot = await db.collection(STOCK_COLLECTION).get();
+        
+    return snapshot.docs.map((doc:any)=> ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+};

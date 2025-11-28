@@ -13,8 +13,8 @@ export const createStockItem = async (data: ProductBody): Promise<Product> => {
 
 export const getStockItems = async () => {
     const snapshot = await db.collection(STOCK_COLLECTION).get();
-        
-    return snapshot.docs.map((doc:any)=> ({
+
+    return snapshot.docs.map((doc: any) => ({
         id: doc.id,
         ...doc.data(),
     }));
@@ -29,7 +29,13 @@ const getStockRef = (id: string) => {
     return stockRef;
 }
 export const getStockById = async (id: string) => {
-    const stockRef = getStockRef(id);
-    const snap = await stockRef.get();
-    return snap.data();
+    const snap = await getStockRef(id).get();
+    if (!snap.exists) return undefined;
+
+    return { id: snap.id, ...snap.data() } as Product;
 }
+
+export const updateStock = async (item: ProductBody, id: string): Promise<Product | undefined> => {
+    await getStockRef(id).set(item, { merge: true });
+    return getStockById(id);
+};

@@ -1,6 +1,7 @@
 import { NextFunction } from "express";
 import { Request, Response } from "express";
 import * as StockService from '../../services/StockServices/StokService'
+import { Product } from "../../types/types";
 export async function createStock(req: Request, res: Response, next: NextFunction) {
     const stockDetails = req.body;
     try {
@@ -38,3 +39,14 @@ export const getStockItemById = async (req: Request, res: Response,next:NextFunc
    next(error)
   }
 };
+export async function updateStockItem(req: Request, res: Response, next: NextFunction): Promise<void> {
+  const item: Product = req.body;
+  const stockid = req.params.id;
+
+  try {
+    const newStock = await StockService.updateStock(item,stockid)
+    res.status(200).json(newStock);
+  } catch (error) {
+    next(error);
+  }
+}
